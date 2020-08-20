@@ -18,7 +18,7 @@ const Form = () => {
         terms:''
     })
 
-    const [post,setPost] = useState()
+    const [post, setPost] = useState([])
     const validateChange = (evt) => {
         yup.reach(schema, evt.target.name)
         .validate(evt.target.value)
@@ -41,7 +41,7 @@ const Form = () => {
         evt.preventDefault()
         axios.post('https://reqres.in/api/users/data', data)
         .then((res) => {
-            setPost(res.data)
+            setPost([res.data, ...post])
             setFormData({
                 name: '',
                 email:'',
@@ -110,7 +110,7 @@ const Form = () => {
                 />
                 {errors.terms.length > 0 ? <p>{errors.terms}</p> : undefined}
             </label>
-            <button disabled = {buttonDisabled} type = 'submit'>Submit</button>
+            <button disabled={buttonDisabled} type='submit' id='submit'>Submit</button>
             <pre>{JSON.stringify(post, undefined, 1)}</pre>
         </form>
     )
